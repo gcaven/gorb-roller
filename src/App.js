@@ -70,7 +70,8 @@ function App() {
 
   return (
     <div className="App">
-      <Heading>Gorb Roller 1.0</Heading>
+      <Heading>Gorb Roller 1.1</Heading>
+      <Configuration BAB={BAB} DEX={DEX} setBAB={setBAB} setDEX={setDEX} />
       <OptionsContainer>
         {options.map(option => <Selector {...option} />)}
       </OptionsContainer>
@@ -105,6 +106,40 @@ function App() {
   );
 }
 
+function Configuration({ BAB, DEX, setBAB, setDEX }) {
+  const [collapsed, setCollapsed] = useState(false);
+
+  function setPartialBAB(max = BAB[0], min = BAB[1]) {
+    setBAB([max, min]);
+  }
+
+  return (
+    <>
+      {/* <button 
+        value={collapsed} 
+        onClick={() => {setCollapsed(!collapsed)}}
+      >
+        Stats Config
+      </button> */}
+      {!collapsed && (
+        <ConfigurationContainer>
+          <Option>
+            <label>Base Attack Bonus:</label>
+            <NumberInput type="number" value={BAB[0]} onChange={e => setPartialBAB(e.target.value)}/>
+            <span>/</span>
+            <NumberInput type="number" value={BAB[1]} onChange={e => setPartialBAB(null, e.target.value)}/>
+          </Option>
+          <Option>
+            <label>Dex Mod:</label>
+            <NumberInput type="number" value={DEX} onChange={e => setDEX(e.target.value)}/>
+          </Option>
+        </ConfigurationContainer>
+      )}
+
+    </>
+  )
+}
+
 function Selector({ enabled, label, setEnabled, disabled }) {
   return (
     <Option>
@@ -131,7 +166,13 @@ const OptionsContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-`
+`;
+
+const ConfigurationContainer = styled(OptionsContainer)`
+  border-bottom: 1px solid #afa;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+`;
 
 const Option = styled.div`
   display: flex;
@@ -139,6 +180,18 @@ const Option = styled.div`
   align-items: center;
   height: 25px;
   padding: 0 15px;
+`;
+
+const NumberInput = styled.input`
+  font-size: 14px;
+  padding: 2px 5px;
+  border-radius: 4px;
+  border: 1px solid #afa;
+  background-color: #1e1e1e;
+  color: white;
+  width: 25px;
+  margin-left: 5px;
+  margin-right: 5px;
 `;
 
 const SummaryBlock = styled.div`
