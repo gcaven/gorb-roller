@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 function App() {
-  const [BAB, setBAB] = useState([8, 3]);
+  const [BAB, setBAB] = useState([9, 4]);
   const [DEX, setDEX] = useState(8);
   const [kiAttack, setKiAttack] = useState(false);
   const [fullAttack, setFullAttack] = useState(false);
@@ -39,7 +39,7 @@ function App() {
     let baseDMG = '10';
     let staticPlusses = 0;
     let everythingElse = '';
-    if (sneakAttack) everythingElse += '6d6';
+    if (sneakAttack) everythingElse += '7d6';
     if (inariBuff) {
       staticPlusses += 1;
       everythingElse += `${sneakAttack ? ' + ' : ''} 1d6 elemental`;
@@ -70,7 +70,7 @@ function App() {
 
   return (
     <div className="App">
-      <Heading>Gorb Roller 1.1</Heading>
+      <Heading>Gorb Roller 1.2</Heading>
       <Configuration BAB={BAB} DEX={DEX} setBAB={setBAB} setDEX={setDEX} />
       <OptionsContainer>
         {options.map(option => <Selector {...option} />)}
