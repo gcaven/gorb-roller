@@ -4,6 +4,7 @@ import styled from 'styled-components';
 function App() {
   const [BAB, setBAB] = useState([9, 4]);
   const [DEX, setDEX] = useState(8);
+  const [generalBonus, setGeneralBonus] = useState(0);
   const [kiAttack, setKiAttack] = useState(false);
   const [fullAttack, setFullAttack] = useState(false);
   const [haste, setHaste] = useState(false);
@@ -32,6 +33,7 @@ function App() {
     if (rapidShot) bonus -=2 ;
     if (within30ft) bonus += 1;
     if (flurryOfStars) bonus -= 2;
+    bonus += generalBonus;
     return bonus;
   }
 
@@ -48,6 +50,10 @@ function App() {
     let string = baseDMG;
     if (staticPlusses > 0) string += ` + ${staticPlusses}`;
     if (everythingElse.length > 0) string += ` + ${everythingElse}`;
+    if (generalBonus !== 0) {
+      if (generalBonus > 0) string += ` + ${generalBonus}`;
+      if (generalBonus < 0) string += ` - ${Math.abs(generalBonus)}`;
+    }
     return string;
   }
 
@@ -70,8 +76,15 @@ function App() {
 
   return (
     <div className="App">
-      <Heading>Gorb Roller 1.2</Heading>
-      <Configuration BAB={BAB} DEX={DEX} setBAB={setBAB} setDEX={setDEX} />
+      <Heading>Gorb Roller 1.3</Heading>
+      <Configuration 
+        BAB={BAB} 
+        DEX={DEX} 
+        bonus={generalBonus} 
+        setBAB={setBAB} 
+        setDEX={setDEX} 
+        setBonus={setGeneralBonus} 
+      />
       <OptionsContainer>
         {options.map(option => <Selector {...option} />)}
       </OptionsContainer>
@@ -106,11 +119,11 @@ function App() {
   );
 }
 
-function Configuration({ BAB, DEX, setBAB, setDEX }) {
+function Configuration({ BAB, DEX, bonus, setBAB, setDEX, setBonus }) {
   const [collapsed, setCollapsed] = useState(false);
 
   function setPartialBAB(max = BAB[0], min = BAB[1]) {
-    setBAB([max, min]);
+    setBAB([parseInt(max), parseInt(min)]);
   }
 
   return (
@@ -127,11 +140,15 @@ function Configuration({ BAB, DEX, setBAB, setDEX }) {
             <label>Base Attack Bonus:</label>
             <NumberInput type="number" value={BAB[0]} onChange={e => setPartialBAB(e.target.value)}/>
             <span>/</span>
-            <NumberInput type="number" value={BAB[1]} onChange={e => setPartialBAB(null, e.target.value)}/>
+            <NumberInput type="number" value={BAB[1]} onChange={e => setPartialBAB(BAB[0], e.target.value)}/>
           </Option>
           <Option>
             <label>Dex Mod:</label>
-            <NumberInput type="number" value={DEX} onChange={e => setDEX(e.target.value)}/>
+            <NumberInput type="number" value={DEX} onChange={e => setDEX(parseInt(e.target.value))}/>
+          </Option>
+          <Option>
+            <label>Bonus/Malus:</label>
+            <NumberInput type="number" value={bonus} onChange={e => setBonus(parseInt(e.target.value))}/>
           </Option>
         </ConfigurationContainer>
       )}
