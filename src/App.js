@@ -76,7 +76,7 @@ function App() {
 
   return (
     <div className="App">
-      <Heading>Gorb Roller 1.3</Heading>
+      <Heading>Gorb Roller 1.4</Heading>
       <Configuration 
         BAB={BAB} 
         DEX={DEX} 
