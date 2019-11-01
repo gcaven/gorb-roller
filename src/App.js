@@ -25,20 +25,21 @@ function App() {
   ];
 
   function calculateAttackRollBonus(babVal = 0) {
-    let bonus = 0;
+    let bonus = 1; // weapon focus
     const bab = BAB[babVal]; // unless its not, deal with later
     bonus += bab;
     bonus += DEX;
     if (inariBuff) bonus += 1;
-    if (rapidShot) bonus -=2 ;
+    if (haste) bonus += 1;
     if (within30ft) bonus += 1;
+    if (rapidShot) bonus -=2 ;
     if (flurryOfStars) bonus -= 2;
     bonus += generalBonus;
     return bonus;
   }
 
   function calculateDamageRoll() {
-    let baseDMG = '10';
+    let baseDMG = '11'; // 10 from shuriken, +1 from weapon focus
     let staticPlusses = 0;
     let everythingElse = '';
     if (sneakAttack) everythingElse += '7d6';
@@ -47,12 +48,12 @@ function App() {
       everythingElse += `${sneakAttack ? ' + ' : ''} 1d6 elemental`;
     }
     if (within30ft) staticPlusses += 1;
+    if (haste) staticPlusses += 1;
     let string = baseDMG;
     if (staticPlusses > 0) string += ` + ${staticPlusses}`;
     if (everythingElse.length > 0) string += ` + ${everythingElse}`;
     if (generalBonus !== 0) {
-      if (generalBonus > 0) string += ` + ${generalBonus}`;
-      if (generalBonus < 0) string += ` - ${Math.abs(generalBonus)}`;
+      staticPlusses += generalBonus;
     }
     return string;
   }
@@ -60,10 +61,9 @@ function App() {
   function calculateNumberOfAttacks() {
     let numAttacks = 1;
     if (kiAttack) numAttacks += 1;
-    // if (fullAttack) numAttacks += 1;
-    if (haste) numAttacks += 1;
-    if (rapidShot) numAttacks += 1;
-    if (flurryOfStars) numAttacks += 2;
+    if (haste && fullAttack) numAttacks += 1;
+    if (rapidShot && fullAttack) numAttacks += 1;
+    if (flurryOfStars && fullAttack) numAttacks += 2;
     return numAttacks;
   }
 
