@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e8a3ad52c1bbf7341ea016703a0a4af0",
+    "revision": "7889e46b4a150b46eea2ac1b70171fa6",
     "url": "/gorb-roller/index.html"
   },
   {
-    "revision": "4aabdc30233a400708fc",
+    "revision": "56f1acef3f1d719fa8b2",
     "url": "/gorb-roller/static/css/main.f99d81e0.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/gorb-roller/static/js/2.ae1e453b.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "4aabdc30233a400708fc",
-    "url": "/gorb-roller/static/js/main.ff7186b5.chunk.js"
+    "revision": "56f1acef3f1d719fa8b2",
+    "url": "/gorb-roller/static/js/main.8b89068c.chunk.js"
   },
   {
     "revision": "e36d078b0d5fac828ca9",
