@@ -2,26 +2,30 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 function App() {
-  const [BAB, setBAB] = useState([10, 5]);
+  const [BAB, setBAB] = useState([11, 6, 1]);
   const [DEX, setDEX] = useState(8);
   const [generalBonus, setGeneralBonus] = useState(0);
   const [kiAttack, setKiAttack] = useState(false);
   const [fullAttack, setFullAttack] = useState(false);
   const [haste, setHaste] = useState(false);
-  const [sneakAttack, setSneakAttack] = useState(false);
+  const [sneakAttack, setSneakAttack] = useState(  false);
   const [inariBuff, setInariBuff] = useState(false);
+  const [inariElementalRage, setInariElementalRage] = useState(false);
+  const [chargedElementalRage, setChargedElementalRage] = useState(false);
   const [rapidShot, setRapidShot] = useState(false);
   const [within30ft, setWithin30ft] = useState(false);
   const [flurryOfStars, setFlurryOfStars] = useState(false);
   const options = [
-    { label: 'target within 30ft', enabled: within30ft, setEnabled: setWithin30ft },
-    { label: 'Inari Buffing', enabled: inariBuff, setEnabled: setInariBuff },
-    { label: 'Haste', enabled: haste, setEnabled: setHaste },
-    { label: 'Spend Ki', enabled: kiAttack, setEnabled: setKiAttack },
-    { label: 'Full Attack', enabled: fullAttack, setEnabled: setFullAttack },
+    { label: 'Target Within 30ft', enabled: within30ft, setEnabled: setWithin30ft },
+    { label: 'Whiskers Haste', enabled: haste, setEnabled: setHaste },
+    { label: 'Spend Extra Ki', enabled: kiAttack, setEnabled: setKiAttack },
     { label: 'Sneak Attack', enabled: sneakAttack, setEnabled: setSneakAttack },
-    { label: 'Rapid Shot (req. Full Attack)', enabled: rapidShot && fullAttack, setEnabled: setRapidShot, disabled: !fullAttack },
-    { label: 'Flurry of Stars (req. Full Attack)', enabled: flurryOfStars && fullAttack, setEnabled: setFlurryOfStars, disabled: !fullAttack },
+    { label: 'Inari Buffing', enabled: inariBuff, setEnabled: setInariBuff },
+    { label: ' - Inari Elemental Rage', enabled: inariBuff && inariElementalRage, setEnabled: setInariElementalRage, disabled: !inariBuff },
+    { label: ' - Charge Elemental Rage (Swift Action)', enabled: inariBuff && inariElementalRage && chargedElementalRage, setEnabled: setChargedElementalRage, disabled: !inariBuff },
+    { label: 'Full Attack', enabled: fullAttack, setEnabled: setFullAttack },
+    { label: ' - Rapid Shot', enabled: rapidShot && fullAttack, setEnabled: setRapidShot, disabled: !fullAttack },
+    { label: ' - Flurry of Stars', enabled: flurryOfStars && fullAttack, setEnabled: setFlurryOfStars, disabled: !fullAttack },
   ];
 
   function calculateAttackRollBonus(babVal = 0) {
@@ -42,10 +46,12 @@ function App() {
     let baseDMG = '11'; // 10 from shuriken, +1 from weapon focus
     let staticPlusses = 0;
     let everythingElse = '';
-    if (sneakAttack) everythingElse += '7d6';
+    if (sneakAttack) everythingElse += '8d6';
     if (inariBuff) {
       staticPlusses += 1;
-      everythingElse += `${sneakAttack ? ' + ' : ''} 1d6 elemental`;
+      if (chargedElementalRage) everythingElse += `${sneakAttack ? ' + ' : ''} 3d6 elemental`;
+      else if (inariElementalRage) everythingElse += `${sneakAttack ? ' + ' : ''} 2d6 elemental`;
+      else everythingElse += `${sneakAttack ? ' + ' : ''} 1d6 elemental`;
     }
     if (within30ft) staticPlusses += 1;
     if (haste) staticPlusses += 1;
@@ -76,7 +82,7 @@ function App() {
 
   return (
     <div className="App">
-      <Heading>Gorb Roller 1.5</Heading>
+      <Heading>Gorb Roller 1.6</Heading>
       <Configuration 
         BAB={BAB} 
         DEX={DEX} 
@@ -100,17 +106,30 @@ function App() {
         </div>
       </SummaryBlock>
       {fullAttack && (
-        <SummaryBlock>
-          <div>1 Attack @</div>
-          <div>
-            <span>Attack Roll:</span>
-            <span>1d20 + {calculateAttackRollBonus(1)}</span>
-          </div>
-          <div>
-            <span>Damage Roll:</span>
-            <span>{calculateDamageRoll()}</span>
-          </div>
-        </SummaryBlock>
+        <>
+          <SummaryBlock>
+            <div>1 Attack @</div>
+            <div>
+              <span>Attack Roll:</span>
+              <span>1d20 + {calculateAttackRollBonus(1)}</span>
+            </div>
+            <div>
+              <span>Damage Roll:</span>
+              <span>{calculateDamageRoll()}</span>
+            </div>
+          </SummaryBlock>
+          <SummaryBlock>
+            <div>1 Attack @</div>
+            <div>
+              <span>Attack Roll:</span>
+              <span>1d20 + {calculateAttackRollBonus(2)}</span>
+            </div>
+            <div>
+              <span>Damage Roll:</span>
+              <span>{calculateDamageRoll()}</span>
+            </div>
+          </SummaryBlock>
+        </>
       )}
       <SummaryBlock>
         <span>Ki Cost: {calculateKiCost()}</span>
@@ -122,8 +141,8 @@ function App() {
 function Configuration({ BAB, DEX, bonus, setBAB, setDEX, setBonus }) {
   const [collapsed, setCollapsed] = useState(false);
 
-  function setPartialBAB(max = BAB[0], min = BAB[1]) {
-    setBAB([parseInt(max), parseInt(min)]);
+  function setPartialBAB(first = BAB[0], second = BAB[1], third = BAB[2]) {
+    setBAB([parseInt(first), parseInt(second), parseInt(third)]);
   }
 
   return (
@@ -141,6 +160,8 @@ function Configuration({ BAB, DEX, bonus, setBAB, setDEX, setBonus }) {
             <NumberInput type="number" value={BAB[0]} onChange={e => setPartialBAB(e.target.value)}/>
             <span>/</span>
             <NumberInput type="number" value={BAB[1]} onChange={e => setPartialBAB(BAB[0], e.target.value)}/>
+            <span>/</span>
+            <NumberInput type="number" value={BAB[2]} onChange={e => setPartialBAB(BAB[0], BAB[1], e.target.value)}/>
           </Option>
           <Option>
             <label>Dex Mod:</label>
@@ -206,7 +227,7 @@ const NumberInput = styled.input`
   border: 1px solid #afa;
   background-color: #1e1e1e;
   color: white;
-  width: 25px;
+  width: 35px;
   margin-left: 5px;
   margin-right: 5px;
 `;
