@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/gorb-roller/precache-manifest.87df79ba515d0f493602b27f8acbb4aa.js"
+  "/gorb-roller/precache-manifest.724fba9ef8324fef406841fe9cec8500.js"
 );
 
 self.addEventListener('message', (event) => {

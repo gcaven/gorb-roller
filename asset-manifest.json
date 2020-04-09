@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/gorb-roller/static/css/main.f99d81e0.chunk.css",
-    "main.js": "/gorb-roller/static/js/main.8b89068c.chunk.js",
-    "main.js.map": "/gorb-roller/static/js/main.8b89068c.chunk.js.map",
+    "main.js": "/gorb-roller/static/js/main.d7bc2a3a.chunk.js",
+    "main.js.map": "/gorb-roller/static/js/main.d7bc2a3a.chunk.js.map",
     "runtime-main.js": "/gorb-roller/static/js/runtime-main.01e76054.js",
     "runtime-main.js.map": "/gorb-roller/static/js/runtime-main.01e76054.js.map",
     "static/js/2.ae1e453b.chunk.js": "/gorb-roller/static/js/2.ae1e453b.chunk.js",
     "static/js/2.ae1e453b.chunk.js.map": "/gorb-roller/static/js/2.ae1e453b.chunk.js.map",
     "index.html": "/gorb-roller/index.html",
-    "precache-manifest.87df79ba515d0f493602b27f8acbb4aa.js": "/gorb-roller/precache-manifest.87df79ba515d0f493602b27f8acbb4aa.js",
+    "precache-manifest.724fba9ef8324fef406841fe9cec8500.js": "/gorb-roller/precache-manifest.724fba9ef8324fef406841fe9cec8500.js",
     "service-worker.js": "/gorb-roller/service-worker.js",
     "static/css/main.f99d81e0.chunk.css.map": "/gorb-roller/static/css/main.f99d81e0.chunk.css.map",
     "static/js/2.ae1e453b.chunk.js.LICENSE.txt": "/gorb-roller/static/js/2.ae1e453b.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.01e76054.js",
     "static/js/2.ae1e453b.chunk.js",
     "static/css/main.f99d81e0.chunk.css",
-    "static/js/main.8b89068c.chunk.js"
+    "static/js/main.d7bc2a3a.chunk.js"
   ]
 }
