@@ -14,9 +14,11 @@ function App() {
   const [chargedElementalRage, setChargedElementalRage] = useState(false);
   const [rapidShot, setRapidShot] = useState(false);
   const [within30ft, setWithin30ft] = useState(false);
+  const [flanking, setFlanking] = useState(false);
   const [flurryOfStars, setFlurryOfStars] = useState(false);
   const options = [
     { label: 'Target Within 30ft', enabled: within30ft, setEnabled: setWithin30ft },
+    { label: 'Target Flanked', enabled: flanking, setEnabled: setFlanking },
     { label: 'Whiskers Haste', enabled: haste, setEnabled: setHaste },
     { label: 'Spend Extra Ki', enabled: kiAttack, setEnabled: setKiAttack },
     { label: 'Sneak Attack', enabled: sneakAttack, setEnabled: setSneakAttack },
@@ -36,6 +38,7 @@ function App() {
     if (inariBuff) bonus += 1;
     if (haste) bonus += 1;
     if (within30ft) bonus += 1;
+    if (flanking) bonus += 2;
     if (rapidShot) bonus -=2 ;
     if (flurryOfStars) bonus -= 2;
     bonus += generalBonus;
@@ -55,6 +58,7 @@ function App() {
     }
     if (within30ft) staticPlusses += 1;
     if (haste) staticPlusses += 1;
+    if (flanking) staticPlusses += 2;
     let string = baseDMG;
     if (staticPlusses > 0) string += ` + ${staticPlusses}`;
     if (everythingElse.length > 0) string += ` + ${everythingElse}`;
@@ -82,7 +86,7 @@ function App() {
 
   return (
     <div className="App">
-      <Heading>Gorb Roller 1.6</Heading>
+      <Heading>Gorb Roller 1.7</Heading>
       <Configuration 
         BAB={BAB} 
         DEX={DEX} 
