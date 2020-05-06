@@ -10,8 +10,6 @@ function App() {
   const [haste, setHaste] = useState(false);
   const [sneakAttack, setSneakAttack] = useState(  false);
   const [inariBuff, setInariBuff] = useState(false);
-  const [inariElementalRage, setInariElementalRage] = useState(false);
-  const [chargedElementalRage, setChargedElementalRage] = useState(false);
   const [rapidShot, setRapidShot] = useState(false);
   const [within30ft, setWithin30ft] = useState(false);
   const [flanking, setFlanking] = useState(false);
@@ -23,8 +21,6 @@ function App() {
     { label: 'Spend Extra Ki', enabled: kiAttack, setEnabled: setKiAttack },
     { label: 'Sneak Attack', enabled: sneakAttack, setEnabled: setSneakAttack },
     { label: 'Inari Buffing', enabled: inariBuff, setEnabled: setInariBuff },
-    { label: ' - Inari Elemental Rage', enabled: inariBuff && inariElementalRage, setEnabled: setInariElementalRage, disabled: !inariBuff },
-    { label: ' - Charge Elemental Rage (Swift Action)', enabled: inariBuff && inariElementalRage && chargedElementalRage, setEnabled: setChargedElementalRage, disabled: !inariBuff },
     { label: 'Full Attack', enabled: fullAttack, setEnabled: setFullAttack },
     { label: ' - Rapid Shot', enabled: rapidShot && fullAttack, setEnabled: setRapidShot, disabled: !fullAttack },
     { label: ' - Flurry of Stars', enabled: flurryOfStars && fullAttack, setEnabled: setFlurryOfStars, disabled: !fullAttack },
@@ -52,9 +48,7 @@ function App() {
     if (sneakAttack) everythingElse += '8d6';
     if (inariBuff) {
       staticPlusses += 1;
-      if (chargedElementalRage) everythingElse += `${sneakAttack ? ' + ' : ''} 3d6 elemental`;
-      else if (inariElementalRage) everythingElse += `${sneakAttack ? ' + ' : ''} 2d6 elemental`;
-      else everythingElse += `${sneakAttack ? ' + ' : ''} 1d6 elemental`;
+      everythingElse += `${sneakAttack ? ' + ' : ''} 1d6 elemental`;
     }
     if (within30ft) staticPlusses += 1;
     if (haste) staticPlusses += 1;
@@ -86,7 +80,7 @@ function App() {
 
   return (
     <div className="App">
-      <Heading>Gorb Roller 1.7</Heading>
+      <Heading>Gorb Roller 1.8</Heading>
       <Configuration 
         BAB={BAB} 
         DEX={DEX} 
