@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 function App() {
-  const [BAB, setBAB] = useState([12, 7, 2);
+  const [BAB, setBAB] = useState([12, 7, 2]);
   const [DEX, setDEX] = useState(8);
   const [generalBonus, setGeneralBonus] = useState(0);
   const [kiAttack, setKiAttack] = useState(false);
